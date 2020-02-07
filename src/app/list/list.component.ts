@@ -54,10 +54,12 @@ export class ListComponent implements OnInit, AfterViewInit {
   }
 
   onDelete(id: number) {
+    console.log(id);
+
     this.listService.deleteUser(id).subscribe((users: any[]) => {
-      this.listUsers = users;
+      // this.listUsers = users;
+      this.getList();
     });
-    this.getList();
   }
 
   getList() {

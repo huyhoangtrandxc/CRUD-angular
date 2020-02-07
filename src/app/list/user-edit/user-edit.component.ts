@@ -1,14 +1,8 @@
+import { User } from './user.model';
 import { Component, OnInit } from '@angular/core';
 import { ListService } from 'src/app/list.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
-
-// interface User {
-//   id: number;
-//   name: string;
-//   country: string;
-//   avatar: string;
-// }
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-edit',
@@ -16,8 +10,9 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./user-edit.component.scss']
 })
 export class UserEditComponent implements OnInit {
-  user: any;
+  user: User;
   id: number;
+  userForm: FormGroup;
 
   constructor(
     private listService: ListService,
@@ -25,25 +20,38 @@ export class UserEditComponent implements OnInit {
     private router: Router
   ) { }
 
-  userForm = new FormGroup({
-    userName: new FormControl(''),
-    userCountry: new FormControl(''),
-    userAvatar: new FormControl('')
-  });
-
   ngOnInit() {
     this.id = +this.route.snapshot.paramMap.get('id');
-    this.listService.getUser(this.id).subscribe(user => {
+    this.listService.getUser(this.id).subscribe((user: User) => {
       this.user = user;
-      console.log(user);
+    });
+
+    this.userForm = new FormGroup({
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(15),
+        Validators.pattern('[a-zA-Z ]*')
+      ]),
+      country: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(15),
+        Validators.pattern('[a-zA-Z ]*')
+      ]),
+      avatar: new FormControl('', [
+        Validators.required,
+      ])
     });
   }
 
   onSubmit() {
-    console.log(this.userForm, this.id);
-    // this.listService.editUser(this.id, { ...form.value, id: this.id }).subscribe(dataRes => {
-    //   console.log(dataRes);
-    // });
-    this.router.navigate(['']);
+    console.log({ ...this.userForm.value, id: this.id });
+
+    this.listService.editUser(this.id, { ...this.userForm.value }).subscribe(userr => {
+      this.router.navigate(['']);
+      console.log(userr);
+    });
+
   }
 }

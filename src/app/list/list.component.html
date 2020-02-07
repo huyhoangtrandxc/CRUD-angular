@@ -1,0 +1,27 @@
+<table class="table table-hover ">
+  <thead class="thead-dark">
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Country</th>
+      <th>Config</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of listUsers">
+      <th scope="row">
+        <img style="width: 50px;" class="img-thumbnail rounded-circle" [src]="user.avatar" alt="Thumbnail image" />
+      </th>
+      <td>{{ user.name }}</td>
+      <td>{{ user.country }}</td>
+      <td>
+
+        <button mat-raised-button color="primary" id="detail" class="mr-3" (click)="openDialog(user.id)">Detail</button>
+        <a class="btn btn-success mr-3" routerLink="/edit/{{ user.id }}">Edit</a>
+        <button class="btn btn-danger" (click)="onDelete(user.id)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

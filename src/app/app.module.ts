@@ -7,6 +7,7 @@ import { MatDialogModule } from '@angular/material';
 import { MatCardModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -32,15 +33,20 @@ import { FormAddComponent } from './form-add/form-add.component';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+
     MatDialogModule,
     MatButtonModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatInputModule
   ],
   providers: [
 
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ListDetailComponent]
+  entryComponents: [
+    ListDetailComponent,
+    FormAddComponent
+  ]
 })
 export class AppModule { }

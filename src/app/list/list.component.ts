@@ -1,3 +1,4 @@
+import { MatIconModule } from '@angular/material/icon';
 
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -6,6 +7,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ListService } from '../list.service';
 import { ListDetailComponent } from './list-detail/list-detail.component';
 import { User } from './user-edit/user.model';
+import { FormAddComponent } from '../form-add/form-add.component';
 
 @Component({
   selector: 'app-list',
@@ -15,6 +17,7 @@ import { User } from './user-edit/user.model';
 export class ListComponent implements OnInit, AfterViewInit {
   listUsers: any[] = [];
   selectedUser: User;
+  addUser: User;
 
   constructor(
     private listService: ListService,
@@ -30,9 +33,6 @@ export class ListComponent implements OnInit, AfterViewInit {
   }
 
   openDialog(id: number): void {
-    // const dialogConfig = new MatDialogConfig();
-
-    // dialogConfig.autoFocus = true;
     this.onSelectedUser(id);
 
     const dialogRef = this.dialog.open(ListDetailComponent, {
@@ -40,6 +40,25 @@ export class ListComponent implements OnInit, AfterViewInit {
       data: {
         user: this.selectedUser
       },
+      autoFocus: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+
+  }
+
+  openDialogAddUser(): void {
+
+    const dialogRef = this.dialog.open(FormAddComponent, {
+      width: '500px',
+      // data: {
+      //   id: this.listUsers.length + 1,
+      //   name: this.addUser.name,
+      //   country: this.addUser.country,
+      //   avatar: this.addUser.avatar
+      // },
       autoFocus: true
     });
 
@@ -59,6 +78,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     this.listService.deleteUser(id).subscribe((users: any[]) => {
       // this.listUsers = users;
       this.getList();
+      alert('Deleted!!!!')
     });
   }
 

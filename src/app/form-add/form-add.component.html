@@ -1,1 +1,18 @@
-<p>form-add works!</p>
+<form class="form">
+  <mat-form-field class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="Name" [(ngModel)]="data.name">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Country</mat-label>
+    <input matInput placeholder="Country" [(ngModel)]="data.country">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Avatar</mat-label>
+    <input matInput placeholder="Avatar" [(ngModel)]="data.avatar">
+  </mat-form-field>
+
+
+</form>
